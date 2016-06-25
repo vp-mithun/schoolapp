@@ -1,0 +1,453 @@
+<ion-navbar *navbar>
+  <ion-title>{{opType}} Student</ion-title>
+  <ion-buttons end>
+    <button (click)="onSaveStudentInfo(studentForm)" type="submit">
+      <ion-icon name="checkmark-circle"></ion-icon>
+    </button>
+  </ion-buttons>
+</ion-navbar>
+
+<ion-content padding class="student-add-edit">
+  <form #studentForm="ngForm" novalidate>
+    <ion-segment [(ngModel)]="pagesegment" primary>
+      <ion-segment-button value="basic">
+        Basic
+      </ion-segment-button>
+      <ion-segment-button value="personal">
+        Personal
+      </ion-segment-button>
+      <ion-segment-button value="hostel">
+        Hostel
+      </ion-segment-button>
+    </ion-segment>
+    <br>
+    <div [ngSwitch]="pagesegment">
+      <ion-list *ngSwitchWhen="'basic'">
+        <ion-row>
+          <ion-col width-33>
+            <ion-item>
+              <ion-label floating danger>Batch</ion-label>
+              <ion-select type="text" [(ngModel)]="studentModel.batchId">
+                <ion-option *ngFor="let item of batchesList | async" value="{{item.Value}}">{{item.Display}}</ion-option>
+              </ion-select>
+            </ion-item>
+          </ion-col>
+          <ion-col width-67>
+            <ion-item>
+              <ion-label floating danger>
+                <ion-icon name="calendar"></ion-icon> Date of Admission</ion-label>
+              <ion-datetime displayFormat="MMM DD YYYY" [(ngModel)]="studentModel.DateOfAdmission"></ion-datetime>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-item>
+          <ion-label floating danger>IdPrefix</ion-label>
+          <ion-input [(ngModel)]="studentModel.idPrefix" ngControl="idPrefix" type="text" #idPrefix="ngForm">
+          </ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label floating primary>Group</ion-label>
+          <ion-select type="text" [(ngModel)]="studentModel.groupId">
+            <ion-option *ngFor="let item of groupsList | async" value="{{item.Value}}">{{item.Display}}</ion-option>
+          </ion-select>
+        </ion-item>
+        <ion-row>
+          <ion-col width-50>
+            <ion-item>
+              <ion-label floating danger>Standard</ion-label>
+              <ion-select type="text" [(ngModel)]="studentModel.standardId">
+                <ion-option *ngFor="let item of standardList | async" value="{{item.Value}}">{{item.Display}}</ion-option>
+              </ion-select>
+            </ion-item>
+          </ion-col>
+          <ion-col width-50>
+            <ion-item>
+              <ion-label floating danger>Class</ion-label>
+              <ion-select type="text" [(ngModel)]="studentModel.classId">
+                <ion-option *ngFor="let item of classesList | async" value="{{item.Value}}">{{item.Display}}</ion-option>
+              </ion-select>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col width-50>
+            <ion-item>
+              <ion-label floating danger>Seat No</ion-label>
+              <ion-input [(ngModel)]="studentModel.seatNo" ngControl="seatNo" type="text" #seatNo="ngForm"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col width-50>
+            <ion-item>
+              <ion-label floating danger>Roll No</ion-label>
+              <ion-input [(ngModel)]="studentModel.rollNo" ngControl="rollNo" type="text" #rollNo="ngForm"></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col width-50>
+            <ion-item>
+              <ion-label floating danger>GR No</ion-label>
+              <ion-input [(ngModel)]="studentModel.grNo" ngControl="grNo" type="text" #grNo="ngForm"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col width-50>
+            <ion-item>
+              <ion-label floating danger>Student No</ion-label>
+              <ion-input [(ngModel)]="studentModel.studentId" ngControl="studentId" type="text" #studentId="ngForm"></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-item>
+          <ion-label floating danger>First Name</ion-label>
+          <ion-input [(ngModel)]="studentModel.firstName" ngControl="firstName" type="text" #firstName="ngForm">
+          </ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label floating danger>Last Name</ion-label>
+          <ion-input [(ngModel)]="studentModel.lastName" ngControl="lastName" type="text" #lastName="ngForm">
+          </ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label floating danger>Postal Address</ion-label>
+          <ion-textarea [(ngModel)]="studentModel.postalAddress" ngControl="postalAddress" type="text" #postalAddress="ngForm">
+          </ion-textarea>
+        </ion-item>
+        <ion-row>
+          <ion-col width-50>
+            <ion-item>
+              <ion-label floating danger>City/ Village</ion-label>
+              <ion-input [(ngModel)]="studentModel.cityVillage" ngControl="cityVillage" type="text" #cityVillage="ngForm"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col width-50>
+            <ion-item>
+              <ion-label floating danger>PIN Code</ion-label>
+              <ion-input [(ngModel)]="studentModel.pinCode" ngControl="pinCode" type="text" #pinCode="ngForm"></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <ion-item>
+              <ion-label floating danger>
+                <ion-icon name="call"></ion-icon> Parent Phone</ion-label>
+              <ion-input [(ngModel)]="studentModel.parentPhone" ngControl="parentPhone" type="text" #parentPhone="ngForm">
+              </ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <ion-item>
+              <ion-label floating primary>
+                <ion-icon name="calendar"></ion-icon> School Leaving Date</ion-label>
+              <ion-datetime displayFormat="MMM DD YYYY" [(ngModel)]="studentModel.schoolLeavingDate"></ion-datetime>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-item>
+          <ion-label floating primary>School Leaving Remarks</ion-label>
+          <ion-textarea [(ngModel)]="studentModel.schoolLeavingRemark" ngControl="schoolLeavingRemark" type="text" #schoolLeavingRemark="ngForm">
+          </ion-textarea>
+        </ion-item>
+      </ion-list>
+      <ion-list *ngSwitchWhen="'personal'">
+        <ion-row>
+          <ion-col>
+            <ion-item>
+              <ion-label floating danger>Gender</ion-label>
+              <ion-select type="text" [(ngModel)]="studentModel.Gender">
+                <ion-option value="1">Male</ion-option>
+                <ion-option value="2">Female</ion-option>
+              </ion-select>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-item>
+          <ion-label floating primary>Nick Name</ion-label>
+          <ion-input [(ngModel)]="studentModel.nickName" ngControl="nickName" type="text" #nickName="ngForm">
+          </ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label floating primary>Permanent Address</ion-label>
+          <ion-textarea [(ngModel)]="studentModel.permanentAddress" ngControl="permanentAddress" type="text" #permanentAddress="ngForm">
+          </ion-textarea>
+        </ion-item>
+        <ion-row>
+          <ion-col width-50>
+            <ion-item>
+              <ion-label floating primary>Caste</ion-label>
+              <ion-input [(ngModel)]="studentModel.caste" ngControl="caste" type="text" #caste="ngForm"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col width-50>
+            <ion-item>
+              <ion-label floating primary>Sub Caste</ion-label>
+              <ion-input [(ngModel)]="studentModel.subCaste" ngControl="subCaste" type="text" #subCaste="ngForm"></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <ion-item>
+              <ion-label floating danger>
+                <ion-icon name="call"></ion-icon> Mobile Phone 1</ion-label>
+              <ion-input [(ngModel)]="studentModel.mobileNo1" ngControl="mobileNo1" type="text" #mobileNo1="ngForm">
+              </ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <ion-item>
+              <ion-label floating primary>
+                <ion-icon name="call"></ion-icon> Mobile Phone 2</ion-label>
+              <ion-input [(ngModel)]="studentModel.mobileNo2" ngControl="mobileNo2" type="text" #mobileNo2="ngForm">
+              </ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <ion-item>
+              <ion-label floating primary>
+                <ion-icon name="mail"></ion-icon> Personal Email</ion-label>
+              <ion-input [(ngModel)]="studentModel.personalEmail" ngControl="personalEmail" type="text" #personalEmail="ngForm">
+              </ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <ion-item>
+              <ion-label floating primary>
+                <ion-icon name="mail"></ion-icon> Parent Email</ion-label>
+              <ion-input [(ngModel)]="studentModel.parentEmail" ngControl="parentEmail" type="text" #parentEmail="ngForm">
+              </ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col>
+            <ion-item>
+              <ion-label floating primary>Blood Group</ion-label>
+              <ion-select type="text" [(ngModel)]="studentModel.bloodgroupId">
+                <ion-option value="1">A</ion-option>
+                <ion-option value="2">A-</ion-option>
+                <ion-option value="3">B+</ion-option>
+                <ion-option value="4">B-</ion-option>
+                <ion-option value="5">AB+</ion-option>
+                <ion-option value="6">AB-</ion-option>
+                <ion-option value="7">O+</ion-option>
+                <ion-option value="8">O-</ion-option>
+              </ion-select>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col>
+            <ion-item>
+              <ion-label floating primary>Talents</ion-label>
+              <ion-select type="text" [(ngModel)]="studentModel.talents" multiple='true'>
+                <ion-option *ngFor="let item of talentsList | async" value="{{item.Value}}">{{item.Display}}</ion-option>
+              </ion-select>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-item>
+          <ion-label floating primary>Hobbies</ion-label>
+          <ion-textarea [(ngModel)]="studentModel.hobbies" ngControl="hobbies" type="text" #hobbies="ngForm">
+          </ion-textarea>
+        </ion-item>
+        <ion-item>
+          <ion-label floating primary>Notes</ion-label>
+          <ion-textarea [(ngModel)]="studentModel.notes" ngControl="notes" type="text" #notes="ngForm">
+          </ion-textarea>
+        </ion-item>
+        <br>
+        <div class="sectionHeader">Satsang</div>
+        <br>
+        <ion-item>
+          <ion-label floating primary>Referal Saint</ion-label>
+          <ion-textarea [(ngModel)]="studentModel.referalsaint" ngControl="referalsaint" type="text" #referalsaint="ngForm">
+          </ion-textarea>
+        </ion-item>
+        <ion-row>
+          <ion-col>
+            <ion-item>
+              <ion-label floating primary>Satsang Type</ion-label>
+              <ion-select type="text" [(ngModel)]="studentModel.satsang">
+                <ion-option value="10">Satsangi</ion-option>
+                <ion-option value="20">Gunbhavi</ion-option>
+                <ion-option value="30">Other</ion-option>
+
+              </ion-select>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <ion-item>
+              <ion-label floating primary>Satsang Info</ion-label>
+              <ion-select type="text" [(ngModel)]="studentModel.satsanginfo" multiple='true'>
+                <ion-option *ngFor="let item of satsangActivitiesList | async" value="{{item.Value}}">{{item.Display}}</ion-option>
+              </ion-select>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <ion-item>
+              <ion-label floating primary>Magazines</ion-label>
+              <ion-select type="text" [(ngModel)]="studentModel.magazines" multiple='true'>
+                <ion-option *ngFor="let item of MagazinesList | async" value="{{item.Value}}">{{item.Display}}</ion-option>
+              </ion-select>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <ion-item>
+              <ion-label floating primary>Ekadashi Type</ion-label>
+              <ion-select type="text" [(ngModel)]="studentModel.ekadashi">
+                <ion-option value="1">Farali</ion-option>
+                <ion-option value="2">Nirjala</ion-option>
+                <ion-option value="3">No</ion-option>
+              </ion-select>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <ion-item>
+              <ion-label floating primary>Satsang Exam Level</ion-label>
+              <ion-select type="text" [(ngModel)]="studentModel.satsangExam">
+                <ion-option value="1">Pramambh</ion-option>
+                <ion-option value="2">Pravesh</ion-option>
+                <ion-option value="3">Parichay</ion-option>
+                <ion-option value="4">Pravin</ion-option>
+                <ion-option value="5">Pragna 1</ion-option>
+                <ion-option value="6">Pragna 2</ion-option>
+                <ion-option value="7">Pragna 3</ion-option>
+              </ion-select>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-item>
+          <ion-label floating primary>Satsang Effect</ion-label>
+          <ion-textarea [(ngModel)]="studentModel.satsangEffect" ngControl="satsangEffect" type="text" #satsangEffect="ngForm">
+          </ion-textarea>
+        </ion-item>
+        <ion-row>
+          <ion-col>
+            <ion-item>
+              <ion-label floating primary>Ex APC</ion-label>
+              <ion-select type="text" [(ngModel)]="studentModel.exAPC">
+                <ion-option *ngFor="let item of exAPCList | async" value="{{item.Value}}">{{item.Display}}</ion-option>
+              </ion-select>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+      </ion-list>
+      <ion-list *ngSwitchWhen="'hostel'">
+        <ion-row>
+          <ion-col>
+            <ion-item>
+              <ion-label floating primary>Block No</ion-label>
+              <ion-input [(ngModel)]="studentModel.hostelBlockNo" ngControl="hostelBlockNo" type="text" #hostelBlockNo="ngForm">
+              </ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-item>
+          <ion-label floating primary>Room No</ion-label>
+          <ion-input [(ngModel)]="studentModel.hostelRoomNo" ngControl="hostelRoomNo" type="text" #hostelRoomNo="ngForm">
+          </ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label floating primary>Other Details</ion-label>
+          <ion-textarea [(ngModel)]="studentModel.hostelOtherDetails" ngControl="hostelOtherDetails" type="text" #hostelOtherDetails="ngForm">
+          </ion-textarea>
+        </ion-item>
+        <ion-row>
+          <ion-col>
+            <ion-item>
+              <ion-label floating primary>Hostel Seva</ion-label>
+              <ion-select type="text" [(ngModel)]="studentModel.hostelSeva">
+                <ion-option value="1">Safsufi</ion-option>
+                <ion-option value="2">Pirasavu</ion-option>
+              </ion-select>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+
+        <br>
+        <div class="sectionHeader">Studies & Behaviour</div>
+        <br>
+        <ion-item>
+          <ion-label floating primary>Study Remark</ion-label>
+          <ion-textarea [(ngModel)]="studentModel.studiesRemark" ngControl="studiesRemark" type="text" #studiesRemark="ngForm">
+          </ion-textarea>
+        </ion-item>
+        <ion-row>
+          <ion-col>
+            <ion-item>
+              <ion-label floating primary>Progress</ion-label>
+              <ion-select type="text" [(ngModel)]="studentModel.studyProgressId">
+                <ion-option value="1">Very Good</ion-option>
+                <ion-option value="2">Good</ion-option>
+                <ion-option value="3">Bad</ion-option>
+                <ion-option value="4">Very Bad</ion-option>
+              </ion-select>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <ion-item>
+              <ion-label floating primary>Behaviour</ion-label>
+              <ion-select type="text" [(ngModel)]="studentModel.behaviourId">
+                <ion-option value="1">Very Good</ion-option>
+                <ion-option value="2">Good</ion-option>
+                <ion-option value="3">Bad</ion-option>
+                <ion-option value="4">Very Bad</ion-option>
+              </ion-select>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+      </ion-list>
+    </div>
+  </form>
+
+
+  <!--<h4>Basic</h4>
+  <form #studentForm="ngForm" novalidate>    
+    <ion-item>
+      <ion-label floating primary>First Name</ion-label>
+      <ion-input [(ngModel)]="studentModel.firstName" ngControl="firstName" type="text" #firstName="ngForm">
+      </ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating primary>Last Name</ion-label>
+      <ion-input [(ngModel)]="studentModel.lastName" ngControl="lastName" type="text" #lastName="ngForm">
+      </ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Select Batch</ion-label>
+      <ion-select type="text" [(ngModel)]="studentModel.batchId">
+        <ion-option *ngFor="let item of batchesList | async" value="{{item.Value}}">{{item.Display}}</ion-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-icon name="checkmark-circle"></ion-icon>
+      <ion-label>Date of Admission</ion-label>
+      <ion-datetime displayFormat="MMM DD YYYY" [(ngModel)]="studentModel.DateOfAdmission"></ion-datetime>
+    </ion-item>
+  </form>-->
+
+</ion-content>
