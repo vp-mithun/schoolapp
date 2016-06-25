@@ -21,7 +21,7 @@ export class StudentAddEditPage implements OnInit {
   exAPCList: FirebaseListObservable<any>;
 
   studentModel = new StudentInfo(0,null,'SV01-',0,0,0,null,null,null,null,'',
-                  '','','',null,'', null,'',null,'','','','',null, null,'','',0,null,'','','',null,'','',null, '','','','','','');
+                  '','','',null,'', null,'',null,'','','','',null, null,'','',0,null,'','','',null,'','',null, '','','','','','','',null,'',null,'');
                   
 
   constructor(private nav: NavController, private navParams: NavParams, private af: AngularFire) {
@@ -31,7 +31,7 @@ export class StudentAddEditPage implements OnInit {
   ngOnInit(){
       this.batchesList = this.af.database.list('/Batches');
       this.groupsList = this.af.database.list('/Groups');
-      this.standardList =  this.af.database.list('/Standard');
+      this.standardList =  this.af.database.list('/Standards');
       this.classesList = this.af.database.list('/Sections');
       this.talentsList = this.af.database.list('/Talents');
       this.satsangActivitiesList = this.af.database.list('SatsangActivities');
